@@ -13,7 +13,7 @@ Insert the following code in your `expressionengine/config/hooks.php` file:
 ```php
 	$hook['pre_system'] = array(
 		'class'    => 'Manifest',
-		'function' => 'execute',
+		'function' => 'load',
 		'filename' => 'manifest.php',
 		'filepath' => 'third_party/manifest',
 		'params'   => array()
