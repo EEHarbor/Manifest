@@ -9,7 +9,7 @@ Manifest is a simple module that enables the storage of Expression Engine config
 
 ## Setup
 
-1. Insert the following code in your `expressionengine/config/hooks.php` file:
+Insert the following code in your `expressionengine/config/hooks.php` file:
 ```php
 	$hook['pre_system'] = array(
 		'class'    => 'Manifest',
@@ -19,8 +19,10 @@ Manifest is a simple module that enables the storage of Expression Engine config
 		'params'   => array()
 	);
 ```
-2. Move the `third_party/manifest/.env.example` file to `expressionengine/.env` and customize the configuration values (and feel free to add more!)
-3. You can now access these configuration values in any of the ExpressionEngine config files (i.e. `expressionengine/config/config.php` and `expressionengine/config/database.php`).
+
+Move the `third_party/manifest/.env.example` file to `expressionengine/.env` and customize the configuration values (and feel free to add more!)
+
+You can now access these configuration values in any of the ExpressionEngine config files (i.e. `expressionengine/config/config.php` and `expressionengine/config/database.php`).
 
 ### Example
 
