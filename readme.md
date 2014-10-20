@@ -9,15 +9,20 @@ Manifest is a simple module that enables the storage of Expression Engine config
 
 ## Setup
 
+Enable System Hooks by going to your `config/config.php` file and updating the `enable_hooks` setting to be: 
+```php
+$config['enable_hooks'] = TRUE;
+```
+
 Insert the following code in your `expressionengine/config/hooks.php` file:
 ```php
-	$hook['pre_system'] = array(
-		'class'    => 'Manifest',
-		'function' => 'load',
-		'filename' => 'manifest.php',
-		'filepath' => 'third_party/manifest',
-		'params'   => array()
-	);
+$hook['pre_system'] = array(
+	'class'    => 'Manifest',
+	'function' => 'load',
+	'filename' => 'manifest.php',
+	'filepath' => 'third_party/manifest',
+	'params'   => array()
+);
 ```
 
 Move the `third_party/manifest/.env.example` file to `expressionengine/.env` and customize the configuration values (and feel free to add more!)
@@ -29,9 +34,9 @@ You can now access these configuration values in any of the ExpressionEngine con
 Using the values in the provided `.env.example` file your `config/database.php` file might look something like this:
 
 ```php
-	$db['expressionengine']['hostname'] = 'localhost';
-	$db['expressionengine']['username'] = getenv('DB_USERNAME');
-	$db['expressionengine']['password'] = getenv('DB_PASSWORD');
-	$db['expressionengine']['database'] = getenv('DB_DATABASE');
-	$db['expressionengine']['dbdriver'] = 'mysql';
+$db['expressionengine']['hostname'] = 'localhost';
+$db['expressionengine']['username'] = getenv('DB_USERNAME');
+$db['expressionengine']['password'] = getenv('DB_PASSWORD');
+$db['expressionengine']['database'] = getenv('DB_DATABASE');
+$db['expressionengine']['dbdriver'] = 'mysql';
 ```
