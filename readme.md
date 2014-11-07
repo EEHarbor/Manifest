@@ -13,11 +13,11 @@ Manifest is a simple module that enables the storage of Expression Engine config
 
 Move the `.env.example` file to `system/expressionengine/.env` and customize the configuration values (and feel free to add more!)
 
-You can now access these configuration values in any of the ExpressionEngine config files using the native php `getenv($key)` function or `Manifest::get($key, $fallback_value)`
+You can now access these configuration values in any of the ExpressionEngine config files using the native php `getenv($key)` function or `Manifest::get($key, $fallback_value)`. The latter option requires you to load the Manifest class into your config file as demonstrated in the included config.sample.php and database.sample.php files.
 
 ### Examples
 
-Included in this repository are sample files for `config.php` and `database.php` which are using the values supplied in our example `.env` file.
+Included in this repository are example files for `config.php` and `database.php` which are using the values supplied in our example `.env` file.
 
 You don't have to use them, but we thought they would be helpful guidelines and a viable quick start option if you like our config setup.
 
@@ -32,7 +32,7 @@ We're always open to suggestions and feedback in the issues but if you feel up t
 
 We're fond of the procedures outlined above but if you're a purist and don't like loading the Manifest class into your config (and have no need for fallbacks) then this is the method for you!
 
-Make sure System Hooks are enabled by going to your `config/config.php` file and updating the `enable_hooks` setting to be: 
+Make sure System Hooks are enabled by going to your `config/config.php` file and updating the `enable_hooks` setting to be:
 
 ```php
 $config['enable_hooks'] = TRUE;
@@ -52,7 +52,7 @@ $hook['pre_system'] = array(
 
 ### About EEHarbor
 
-[EEHarbor](http://eeharbor.com) is the point of shipment for fine ExpressionEngine goods brought to you by the fellas at [Packet Tide](http://packettide.com). 
+[EEHarbor](http://eeharbor.com) is the point of shipment for fine ExpressionEngine goods brought to you by the fellas at [Packet Tide](http://packettide.com).
 
 Looking to have some ExpressionEngine goods of your own built? [Drop us a note. We'd love to chat](mailto:hello@eeharbor.com).
 

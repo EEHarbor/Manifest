@@ -1,12 +1,16 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+require_once(APPPATH.'third_party/manifest/manifest.php');
+
+Manifest::load();
+
 $active_group = 'expressionengine';
 $active_record = TRUE;
 
 $db['expressionengine']['hostname'] = 'localhost';
-$db['expressionengine']['username'] = getenv('DB_USERNAME');
-$db['expressionengine']['password'] = getenv('DB_PASSWORD');
-$db['expressionengine']['database'] = getenv('DB_DATABASE');
+$db['expressionengine']['username'] = Manifest::get('DB_USERNAME', 'root');
+$db['expressionengine']['password'] = Manifest::get('DB_PASSWORD', 'root');
+$db['expressionengine']['database'] = Manifest::get('DB_DATABASE', 'for_the_home_team');
 $db['expressionengine']['dbdriver'] = 'mysqli';
 $db['expressionengine']['pconnect'] = FALSE;
 $db['expressionengine']['dbprefix'] = 'exp_';
