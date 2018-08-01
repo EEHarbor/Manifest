@@ -1,19 +1,26 @@
 <?php
+
 /**
- * Dotenv
+ * Dotenv.
  *
- * Loads a `.env` file in the given directory and sets the environment vars
+ * Loads a `.env` file in the given directory and sets the environment vars.
  */
 class Dotenv
 {
     /**
-     * If true, then environment variables will not be overwritten
+     * If true, then environment variables will not be overwritten.
+     *
      * @var bool
      */
-    private static $immutable = true;
+    protected static $immutable = true;
 
     /**
-     * Load `.env` file in given directory
+     * Load `.env` file in given directory.
+     *
+     * @param string $path
+     * @param string $file
+     *
+     * @return void
      */
     public static function load($path, $file = '.env')
     {
@@ -21,12 +28,13 @@ class Dotenv
             $file = '.env';
         }
 
-        $filePath = rtrim($path, '/') . '/' . $file;
+        $filePath = rtrim($path, '/').'/'.$file;
         if (!is_readable($filePath) || !is_file($filePath)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    "Dotenv: Environment file .env not found or not readable. " .
-                    "Create file with your environment settings at %s",
+                    'Dotenv: Environment file %s not found or not readable. '.
+                    'Create file with your environment settings at %s',
+                    $file,
                     $filePath
                 )
             );
@@ -45,29 +53,33 @@ class Dotenv
             }
             // Only use non-empty lines that look like setters
             if (strpos($line, '=') !== false) {
-                self::setEnvironmentVariable($line);
+                static::setEnvironmentVariable($line);
             }
         }
     }
 
     /**
-     * Set a variable using:
+     * Set a variable.
+     *
+     * Variable set using:
      * - putenv
      * - $_ENV
-     * - $_SERVER
+     * - $_SERVER.
      *
      * The environment variable value is stripped of single and double quotes.
      *
-     * @param $name
-     * @param null $value
+     * @param string      $name
+     * @param string|null $value
+     *
+     * @return void
      */
     public static function setEnvironmentVariable($name, $value = null)
     {
-        list($name, $value) = self::normaliseEnvironmentVariable($name, $value);
+        list($name, $value) = static::normaliseEnvironmentVariable($name, $value);
 
         // Don't overwrite existing environment variables if we're immutable
         // Ruby's dotenv does this with `ENV[key] ||= value`.
-        if (self::$immutable === true && !is_null(self::findEnvironmentVariable($name))) {
+        if (static::$immutable === true && !is_null(static::findEnvironmentVariable($name))) {
             return;
         }
 
@@ -77,13 +89,16 @@ class Dotenv
     }
 
     /**
-     * Require specified ENV vars to be present, or throw Exception.
+     * Require specified ENV vars to be present, or throw an exception.
+     *
      * You can also pass through an set of allowed values for the environment variable.
      *
+     * @param mixed    $environmentVariables
+     * @param string[] $allowedValues
+     *
      * @throws \RuntimeException
-     * @param  mixed             $environmentVariables the name of the environment variable or an array of names
-     * @param  string[]          $allowedValues
-     * @return true              (or throws exception on error)
+     *
+     * @return true
      */
     public static function required($environmentVariables, array $allowedValues = array())
     {
@@ -91,7 +106,7 @@ class Dotenv
         $missingEnvironmentVariables = array();
 
         foreach ($environmentVariables as $environmentVariable) {
-            $value = self::findEnvironmentVariable($environmentVariable);
+            $value = static::findEnvironmentVariable($environmentVariable);
             if (is_null($value)) {
                 $missingEnvironmentVariables[] = $environmentVariable;
             } elseif ($allowedValues) {
@@ -115,34 +130,38 @@ class Dotenv
     }
 
     /**
-     * Takes value as passed in by developer and:
-     * - ensures we're dealing with a separate name and value, breaking apart the name string if needed
+     * Takes value as passed in by developer.
+     *
+     * We're also:
+     * - ensuring we're dealing with a separate name and value, breaking apart the name string if needed
      * - cleaning the value of quotes
      * - cleaning the name of quotes
      * - resolving nested variables
      *
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param string $value
+     *
      * @return array
      */
-    private static function normaliseEnvironmentVariable($name, $value)
+    protected static function normaliseEnvironmentVariable($name, $value)
     {
-        list($name, $value) = self::splitCompoundStringIntoParts($name, $value);
-        $name  = self::sanitiseVariableName($name);
-        $value = self::sanitiseVariableValue($value);
-        $value = self::resolveNestedVariables($value);
+        list($name, $value) = static::splitCompoundStringIntoParts($name, $value);
+        $name = static::sanitiseVariableName($name);
+        $value = static::sanitiseVariableValue($value);
+        $value = static::resolveNestedVariables($value);
 
         return array($name, $value);
     }
 
     /**
-     * If the $name contains an = sign, then we split it into 2 parts, a name & value
+     * If the $name contains an = sign, then we split it into 2 parts, a name & value.
      *
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param string $value
+     *
      * @return array
      */
-    private static function splitCompoundStringIntoParts($name, $value)
+    protected static function splitCompoundStringIntoParts($name, $value)
     {
         if (strpos($name, '=') !== false) {
             list($name, $value) = array_map('trim', explode('=', $name, 2));
@@ -154,13 +173,16 @@ class Dotenv
     /**
      * Strips quotes from the environment variable value.
      *
-     * @param $value
+     * @param string $value
+     *
      * @return string
      */
-    private static function sanitiseVariableValue($value)
+    protected static function sanitiseVariableValue($value)
     {
         $value = trim($value);
-        if (!$value) return '';
+        if (!$value) {
+            return '';
+        }
         if (strpbrk($value[0], '"\'') !== false) { // value starts with a quote
             $quote = $value[0];
             $regexPattern = sprintf('/^
@@ -182,28 +204,32 @@ class Dotenv
             $parts = explode(' #', $value, 2);
             $value = $parts[0];
         }
+
         return trim($value);
     }
 
     /**
      * Strips quotes and the optional leading "export " from the environment variable name.
      *
-     * @param $name
+     * @param string $name
+     *
      * @return string
      */
-    private static function sanitiseVariableName($name)
+    protected static function sanitiseVariableName($name)
     {
         return trim(str_replace(array('export ', '\'', '"'), '', $name));
     }
 
     /**
-     * Look for {$varname} patterns in the variable value and replace with an existing
-     * environment variable.
+     * Look for {$varname} patterns in the variable value.
      *
-     * @param $value
+     * Replace with an existing environment variable.
+     *
+     * @param string $value
+     *
      * @return mixed
      */
-    private static function resolveNestedVariables($value)
+    protected static function resolveNestedVariables($value)
     {
         if (strpos($value, '$') !== false) {
             $value = preg_replace_callback(
@@ -225,7 +251,9 @@ class Dotenv
 
     /**
      * Search the different places for environment variables and return first value found.
-     * @param $name
+     *
+     * @param string $name
+     *
      * @return string
      */
     public static function findEnvironmentVariable($name)
@@ -237,24 +265,43 @@ class Dotenv
                 return $_SERVER[$name];
             default:
                 $value = getenv($name);
-
                 return $value === false ? null : $value; // switch getenv default to null
         }
     }
 
     /**
-     * Make Dotenv immutable. This means that once set, an environment variable cannot be overridden.
+     * Check Dotenv immutable status.
+     *
+     * Returns true if immutable, false if mutable.
+     *
+     * @return bool
      */
-    public static function makeImmutable()
+    public static function isImmutable()
     {
-        self::$immutable = true;
+        return static::$immutable;
     }
 
     /**
-     * Make Dotenv mutable. Environment variables will act as, well, variables.
+     * Make Dotenv immutable.
+     *
+     * This means that once set, an environment variable cannot be overridden.
+     *
+     * @return void
+     */
+    public static function makeImmutable()
+    {
+        static::$immutable = true;
+    }
+
+    /**
+     * Make Dotenv mutable.
+     *
+     * Environment variables will act as, well, variables.
+     *
+     * @return void
      */
     public static function makeMutable()
     {
-        self::$immutable = false;
+        static::$immutable = false;
     }
 }

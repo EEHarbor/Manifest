@@ -1,4 +1,6 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php  if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -126,14 +128,14 @@ $config['word_separator']           = 'dash'; // dash|underscore
 | URI string.  The default setting of "AUTO" works for most servers.
 | If your links do not seem to work, try one of the other delicious flavors:
 |
-| 'AUTO'			Default - auto detects
-| 'PATH_INFO'		Uses the PATH_INFO
-| 'QUERY_STRING'	Uses the QUERY_STRING
-| 'REQUEST_URI'		Uses the REQUEST_URI
-| 'ORIG_PATH_INFO'	Uses the ORIG_PATH_INFO
+| 'AUTO'            Default - auto detects
+| 'PATH_INFO'       Uses the PATH_INFO
+| 'QUERY_STRING'    Uses the QUERY_STRING
+| 'REQUEST_URI'     Uses the REQUEST_URI
+| 'ORIG_PATH_INFO'  Uses the ORIG_PATH_INFO
 |
 */
-$config['uri_protocol']	= 'AUTO';
+$config['uri_protocol'] = 'AUTO';
 
 
 /*
@@ -171,11 +173,11 @@ $config['subclass_prefix'] = 'EE_';
 | If you have enabled error logging, you can set an error threshold to
 | determine what gets logged. Threshold options are:
 |
-|	0 = Disables logging, Error logging TURNED OFF
-|	1 = Error Messages (including PHP errors)
-|	2 = Debug Messages
-|	3 = Informational Messages
-|	4 = All Messages
+|   0 = Disables logging, Error logging TURNED OFF
+|   1 = Error Messages (including PHP errors)
+|   2 = Debug Messages
+|   3 = Informational Messages
+|   4 = All Messages
 |
 | For a live site you'll usually only enable Errors (1) to be logged otherwise
 | your log files will fill up very fast.
@@ -247,7 +249,7 @@ $config['encryption_key'] = Manifest::get('ENCRYPTION_KEY', '');
 | in your view files.  Options are TRUE or FALSE (boolean)
 |
 */
-$config['rewrite_short_tags'] = TRUE;
+$config['rewrite_short_tags'] = true;
 
 
 /* End of file config.php */

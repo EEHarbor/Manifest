@@ -1,17 +1,17 @@
 [
     {
         "name": "vlucas/phpdotenv",
-        "version": "v1.0.9",
-        "version_normalized": "1.0.9.0",
+        "version": "v1.1.1",
+        "version_normalized": "1.1.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/vlucas/phpdotenv.git",
-            "reference": "56c252d48dce336da97926591aed71805203815b"
+            "reference": "0cac554ce06277e33ddf9f0b7ade4b8bbf2af3fa"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/56c252d48dce336da97926591aed71805203815b",
-            "reference": "56c252d48dce336da97926591aed71805203815b",
+            "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/0cac554ce06277e33ddf9f0b7ade4b8bbf2af3fa",
+            "reference": "0cac554ce06277e33ddf9f0b7ade4b8bbf2af3fa",
             "shasum": ""
         },
         "require": {
@@ -20,13 +20,8 @@
         "require-dev": {
             "phpunit/phpunit": "~4.0"
         },
-        "time": "2014-10-16 14:50:21",
+        "time": "2015-05-30T15:59:26+00:00",
         "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0-dev"
-            }
-        },
         "installation-source": "dist",
         "autoload": {
             "psr-0": {
