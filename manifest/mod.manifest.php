@@ -22,7 +22,7 @@ class Manifest
     {
         if (!static::$isLoaded) {
             try {
-                Dotenv::load(APPPATH);
+                Dotenv::load(SYSPATH . 'user/config/');
                 static::$isLoaded = true;
             } catch (Exception $e) {
                 if (DEBUG) {

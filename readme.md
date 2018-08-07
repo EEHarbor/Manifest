@@ -5,13 +5,13 @@ Manifest is a simple module that enables the storage of Expression Engine config
 ## Installation
 
 1. Download the Manifest module
-2. Unpack it and place the manifest folder in your `third_party` directory
+2. Unpack it and place the manifest folder in your `addons` directory
 
 
 ## Setup
 
 
-Move the `.env.example` file to `system/expressionengine/.env` and customize the configuration values (and feel free to add more!)
+Move the `.env.example` file to `system/user/config/.env` and customize the configuration values (and feel free to add more!)
 
 You can now access these configuration values in any of the ExpressionEngine config files using the native php `getenv($key)` function or `Manifest::get($key, $fallback_value)`. The latter option requires you to load the Manifest class into your config file as demonstrated in the included config.sample.php and database.sample.php files.
 
@@ -44,8 +44,8 @@ Insert the following code in your `expressionengine/config/hooks.php` file:
 $hook['pre_system'] = array(
 	'class'    => 'Manifest',
 	'function' => 'load',
-	'filename' => 'manifest.php',
-	'filepath' => 'third_party/manifest',
+	'filename' => 'mod.manifest.php',
+	'filepath' => 'user/addons/manifest',
 	'params'   => array()
 );
 ```
